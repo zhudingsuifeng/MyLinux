@@ -5,7 +5,7 @@
 
 
 
-首先时选用一个发行版本的linux系统,这里我选择的是ubuntu，因为他对于初学者来说比较简单。
+首先是选用一个发行版本的linux系统,这里我选择的是ubuntu，因为他对于初学者来说比较简单。
 ***
 ###ubuntu安装与配置
 + 安装的过程用，最好联网，选择中文支持，同时支持mp3等第三方协议，否则mp3音乐播放不了，手动安装中文支持比较麻烦，对初学者来说是一个挑战。
@@ -17,3 +17,22 @@
 + 说到安装软件，linux最有特点的就是命令行，所有操作都能在命令行下完成，通过命令行来安装软件，但是很多时候我们并不清楚自己要安装的软件具体是哪一个，这时候**apt-cache search 软件名称的一部分**，就能显示出多个软件共我们选择，还是以flashplugin为例。
 ![apt-cache-search](image/apt-cache-search.png)
 根据介绍，选择一个我们需要的软件，使用**apt-get install 软件名**来安装就可以了。
+>到这里一些基本的操作已经可以进行了，要想搭建程序开发环境，还需要安装其他程序。
+***
+**安装sublime text 3**
+
+sublime text 是一个跨平台的，好用的文本编辑器，可以用来编写C，html,php等文件。首先去sublime text官网下载最新版本。
+![sublime-text-3](image/sublime.png)
+下载的是.deb软件包，通过dpkg -i ***.deb安装。sublime text需要破解一下，。网上搜的注册码。
+![register](image/sublime-text-3-register.png)
+
+
+
+复制License中的内容，Sublime Text，执行 Help->Enter license 粘贴你的License，点击OK，重启Sublime Text即可看到你的注册信息。注册之后可以安装很多好用的插件，提高编程的效率。通过PackageControl组件安装插件。
+
+1. 按Ctrl+`调出console（注：安装有QQ输入法的这个快捷键会有冲突的，输入法属性设置-输入法管理-取消热键切换至QQ拼音)。
+2. 粘贴以下代码到底部命令行并回车：
+`
+import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+`
+3. 重启sublime text3，如果在Perferences->package settings中看到package control这一项，则安装成功。
