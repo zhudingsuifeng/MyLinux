@@ -22,8 +22,14 @@
 **安装sublime text 3**
 
 sublime text 是一个跨平台的，好用的文本编辑器，可以用来编写C，html,php等文件。首先去sublime text官网下载最新版本。
+
+
 ![sublime-text-3](image/sublime.png)
+
+
 下载的是.deb软件包，通过dpkg -i ***.deb安装。sublime text需要破解一下，。网上搜的注册码。
+
+
 ![register](image/sublime-text-3-register.png)
 
 
@@ -36,3 +42,109 @@ sublime text 是一个跨平台的，好用的文本编辑器，可以用来编�
 import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
 `
 3. 重启sublime text3，如果在Perferences->package settings中看到package control这一项，则安装成功。
+
+
+**用package control安装插件的方法：**
+
+
+1. 按下Ctrl+Shift+P调出命令面板。
+2. 输入install调出install package选项回车，然后再列表中选重要安装的插件。有很多好用的插件，这里就不再一一介绍了。
+
+**sublimetext中文输入**
+
+不要以为这样sublimetext就完全装好了，作为一个要经常用的中文的程序员，在sublimetext中输入中文乱码，是不能够接受地。接下来就说说，怎么在sublimetext中输入中文。
+
+
+
++ 保存下面的代码到文件sublime_imfix.c(位于~目录)
+```
+    #include <gtk/gtkimcontext.h>
+    void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window)
+    {
+        GtkIMContextClass *klass;
+        g_return_if_fail (GTK_IS_IM_CONTEXT (context));
+        klass = GTK_IM_CONTEXT_GET_CLASS (context);
+        if (klass->set_client_window)
+            klass->set_client_window (context, window);
+        g_object_set_data(G_OBJECT(context),"window",window);
+        if(!GDK_IS_WINDOW (window))
+            return;
+        int width = gdk_window_get_width(window);
+        int height = gdk_window_get_height(window);
+        if(width != 0 && height !=0)
+            gtk_im_context_focus_in(context);
+    }
+```
+![sublime-imfix.c](image/sublime-imfix.png)
+
++ 将上一步的代码编译成共享库libsublime-imfix.so，命令
+`
+cd ~
+gcc -shared -o libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-3.0` -fPIC
+`  
+![libsublime-imfix.so](image/libsublime-imfix.so.png)  
+在这里要注意一点，`pkg-config --libs --cflags gtk+-3.0`用到了gtk+-3.0，因为我的电脑中装的是gtk+3.0版本，有的可能是2.0版本，这里命令根据自己情况进行修改。可以使用`pkg-config --list-all grep gtk`来查看电脑中装的gtk版本。
+
++ 然后将libsublime-imfix.so拷贝到sublime_text所在文件夹sudo mv libsublime-imfix.so /opt/sublime_text/
++ 修改文件/usr/bin/subl的内容`sudo gedit /usr/bin/subl`将`#!/bin/sh
+exec /opt/sublime_text/sublime_text "$@"`修改为`#!/bin/sh
+LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text "$@"`
+此时，在命令中执行 subl 将可以使用搜狗for linux的中文输入。
++ 为了使用鼠标右键打开文件时能够使用中文输入，还需要修改文sublime_text.desktop的内容。命令`sudo gedit /usr/share/applications/sublime_text.desktop`
+将[Desktop Entry]中的字符串
+Exec=/opt/sublime_text/sublime_text %F
+修改为
+Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text %F"
+将[Desktop Action Window]中的字符串
+Exec=/opt/sublime_text/sublime_text -n
+修改为
+Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text -n"
+将[Desktop Action Document]中的字符串
+Exec=/opt/sublime_text/sublime_text --command new_file
+修改为
+Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text --command new_file"
+注意：
+修改时请注意双引号"",否则会导致不能打开带有空格文件名的文件。
+此处仅修改了/usr/share/applications/sublime-text.desktop，但可以正常使用了。opt/sublime_text/目录下的sublime-text.desktop可以修改，也可不修改。
+同时，exex=zsh并不是一定的，根据自己ubuntu所使用的shell来确定。可以通过`exho $SHELL`来确定当前是用的shell。
+
+到这里，就可以在sublimetext中输入中文了。
+***
+**简单说说lamp环境搭建**
+
+因为我的电脑安装的是ubuntu16最新版本，配套的apache2，php7，mysql5和相关的扩展插件。值得注意的是，ubuntu16选用了php7而抛弃了php5所以，一开始我的时候，我安装php5一直不能成功。
+
+为了方便后面适用git,我需要调整apache2默认的路径。apache2安装后默认的根路径是/var/www。
+
++ 直接编辑/etc/apache2/sites-available/default,将DocumentRoot设置为新路径，同时将Directory节点也改为新路径。
+然后重启Web Server：sudo service apache2 restart  
+![000-default](image/000-default.conf.png)  
+![apache2root](image/apache2root.png)  
+![apache2.conf](image/apache2.conf.png)  
+![apache2directory](image/apache2directory.png)  
+真正做完这些之后，apache2的路径就修改为/home/fly/MyGit/www了。
+
+**git相关问题**
+
++ git安装比较简单`sudo apt-get install git`就可以了。  
++ 在有就是注册一个github账号，这方便你查看更多的开源项目，和共享自己的代码。  
++ 建立ssh链接，首先要产生ssh秘钥。`$ ssh-keygen -t rsa -C "youremail@example.com"`你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。  
++ 登陆GitHub，打开“Account settings”，“SSH Keys”页面：然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：  
+![ssh](image/ssh.png)  
+当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。  
++ 测试ssh链接是否成功，`ssh -T git@github.com`,显示如下内容，则连接成功。  
+![ssh-T](image/ssh-T.png)  
++ github仓库建立，和本地仓库建立联系的两种常用方法。一种是，在github new repository并且初始化README文件，在本地终端中克隆。  
+![newrepository-init](image/newrepository-init.png)  
+`git clone git@github.com:zhudingsuifeng/MyUbuntu.git`就会在本地创建一个Myubuntu仓库，并且因为是克隆而来的，远程分支已经配置好了，不需要手动配置。  
+还有一种是，在github新建一个空仓库，不init with README文件，在本地键一个和远程仓库同名的本地仓库。  
+`mkdir MyUbuntu`  
+`cd MyUbuntu`  
+`git init`  
+![newrepository](image/newrepository.png)  
+之后为本地仓库添加远程分支:  
+`$ git remote add origin git@github.com:zhudingsuifeng/MyUbuntu.git`  
+`git push --set-upstream origin master`  
+这样远程仓库和本地仓库的连接就建立了。
+
+
