@@ -145,6 +145,8 @@ Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_
 之后为本地仓库添加远程分支:  
 `$ git remote add origin git@github.com:zhudingsuifeng/MyUbuntu.git`  
 `git push --set-upstream origin master`  
-这样远程仓库和本地仓库的连接就建立了。
+这样远程仓库和本地仓库的连接就建立了。  
+
+**很多软件通过apt-get install vsftpd安装之后，自己手动配置，/etc/vsftpd.conf文件，等把这个文件删除之后，在通过apt-get remove vsftpd删除软件，重新安装，发现/etc/vsftpd.conf文件并不会自动回来。这个时候要通过apt-get remove --purge vsftpd来彻底删除软件，重新安装之后，/etc/vsftpd.conf文件旧找回来了。**
 
 
