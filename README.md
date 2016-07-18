@@ -147,6 +147,15 @@ Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_
 `git push --set-upstream origin master`  
 这样远程仓库和本地仓库的连接就建立了。  
 
-**很多软件通过apt-get install vsftpd安装之后，自己手动配置，/etc/vsftpd.conf文件，等把这个文件删除之后，在通过apt-get remove vsftpd删除软件，重新安装，发现/etc/vsftpd.conf文件并不会自动回来。这个时候要通过apt-get remove --purge vsftpd来彻底删除软件，重新安装之后，/etc/vsftpd.conf文件旧找回来了。**
+**很多软件通过apt-get install vsftpd安装之后，自己手动配置，/etc/vsftpd.conf文件，等把这个文件删除之后，在通过apt-get remove vsftpd删除软件，重新安装，发现/etc/vsftpd.conf文件并不会自动回来。这个时候要通过apt-get remove --purge vsftpd来彻底删除软件，重新安装之后，/etc/vsftpd.conf文件旧找回来了。**  
+虚拟机中一些常用的快捷键：  
 
++ ctrl+alt+enter使虚拟机进入全屏，或者进入普通界面。  
++ ctrl+alt+esc虚拟机捕捉鼠标，或者释放鼠标。  
+其实在虚拟机中所装的操作系统，也是桌面操作系统的时候，这些快捷键一般用不到。但是在虚拟机中安装linux，并且使用文本界面，如果不知道如何释放和捕捉鼠标，将会是很难受的一件事情。  
+***
+另外，想要实现linux系统，文本界面很桌面系统的切换，可以修改/etc/inittab文件，使得系统默认启动后就运行文本界面，或者桌面系统。在文本界面下，可以通过ctrl+alt+F1~F6来切换系统提供的6个终端，或者通过startx启动桌面。在桌面系统的时候，注销用户，就再次回到文本界面。  
+**在centos7中，修改默认的启动级别有些不一样。**  
+![systemd](image/systemd.png)  
+通过命令的形式来设置默认的启动级别，`systemctl set-default multi-user.target`，即多用户模式。
 
