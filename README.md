@@ -158,4 +158,13 @@ Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_
 **在centos7中，修改默认的启动级别有些不一样。**  
 ![systemd](image/systemd.png)  
 通过命令的形式来设置默认的启动级别，`systemctl set-default multi-user.target`，即多用户模式。
-
+**man命令后面跟的数字意思(并不是自己加上去的，而是自动显示的)**
+- （1）用户可以操作的命令或者是可执行文件
+- （2）系统核心可调用的函数与工具等
+- （3）一些常用的函数与数据库
+- （4）设备文件的说明
+- （5）设置文件或者某些文件的格式
+- （6）游戏
+- （7）惯例与协议等
+- （8）系统管理员可用的管理条令
+- （9）与内核有关的文件
