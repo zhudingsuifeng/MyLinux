@@ -157,7 +157,8 @@ Exec=zsh -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_
 另外，想要实现linux系统，文本界面很桌面系统的切换，可以修改/etc/inittab文件，使得系统默认启动后就运行文本界面，或者桌面系统。在文本界面下，可以通过ctrl+alt+F1~F6来切换系统提供的6个终端，或者通过startx启动桌面。在桌面系统的时候，注销用户，就再次回到文本界面。  
 **在centos7中，修改默认的启动级别有些不一样。**  
 ![systemd](image/systemd.png)  
-通过命令的形式来设置默认的启动级别，`systemctl set-default multi-user.target`，即多用户模式。
+通过命令的形式来设置默认的启动级别，`systemctl set-default multi-user.target`，即多用户模式。  
+
 **man命令后面跟的数字意思(并不是自己加上去的，而是自动显示的)**
 - （1）用户可以操作的命令或者是可执行文件
 - （2）系统核心可调用的函数与工具等
