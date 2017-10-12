@@ -1,5 +1,5 @@
 ## cnetos7
-#### install teamviewer12 on centos7
+### install teamviewer12 on centos7
 - download the teamviewer12 rpm package.
 - visit the https://www.teamviewer.com/en/download/linux/
 - install teamviewer12 rpm
@@ -7,7 +7,7 @@
 - error:Failed dependencies:...
 - yum install teamviewer12 rpm #error solve
 - yum will install depended package automatically.
-#### support to chinese
+### support to chinese
 - choose the chinese when install the centos7
 - upper left corner->Applications->System tools->Settings->Region&language
 - Language ->English(United States)
@@ -17,3 +17,23 @@
 ![Input Sources](image/input.png)
 - Input Sources ->Options->Allow different sources for each window.  
 ![Input Sources](image/input1.png)
+### git
+- yum install git
+- ssh-keygen -t rsa  #produce ssh-key
+- copy ~/.ssh/id_rsa.pub to SSH and GPG keys
+- ssh git@github.com 
+- Hi zhudingsuifeng!You've successfully authenticated,but GitHub does not provide shell access.
+- Connection to github.com closed.
+- git clone git@github.com:zhudingsuifeng/shell.git #clone remote repository
+- git clone git@github.com:zhudingsuifeng/shell.git shell #clone remote repository to local address shell 
+### python
+```javascript
+#yum install python-pip #error:no package python-pip available.
+#yum -y install epel-release  #install epel-release
+#yum -y install python-pip   #install successfully
+#pip install somepackage  #install package from PyPi
+#pip uninstall package   #uninstall package
+#python2 -m pip install package #install package to python2
+#### Install python and packages without root permission. ####
+
+``` 
