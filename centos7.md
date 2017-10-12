@@ -16,4 +16,4 @@
 - 这样就可以在显示英文的系统中输入中文。  
 ![Input Sources](image/input.png)
 - Input Sources ->Options->Allow different sources for each window.  
-![Input Sources](image/imput1.png)
+![Input Sources](image/input1.png)
