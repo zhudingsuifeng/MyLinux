@@ -86,5 +86,44 @@ source .bash_profile
 exec bash --login
 #### Install python package ####
 #pip install opencv-python(3.3.0.10)
-#pip install 
+#pip install opencv_contrib_python
+#pip install numpy(1.13.1)
+#pip install pandas(0.20.3)
+#pip install PIL(4.2.1)
+#yum -y install tkinter   #if not ,ImportError:No module named Tkinter.
+#之后tkinter模块安装完毕，就不会出现之前的错误了。
+#pip install matplotlib    #在centos7下执行安装会报错error:command 'gcc' failed with exit status 1
+#缺少一些模块(libffi-devel python-devel openssl-devel)，执行安装之后就可以了
+#yum install gcc libffi-devel python-devel openssl-devel
+#pip install scikit-image(0.13.0)
+#pip install matplotlib
+#### install setuptools ####
+Before installing pip ,we should install setuptools ,because of depend.
+wget --no-check-certificate https://pypi.python.org/packages/45/29/8814bf414e7cd1031e1a3c8a4169218376e284ea2553cc0822a6ea1c2d78/setuptools-36.6.0.zip#md5=74663b15117d9a2cc5295d76011e6fd1
+unzip setuptools-36.6.0.zip
+cd setuptools-36.6.0
+/data/home/xjsjxly/fly/python/bin/python2.7 setup.py install 
+#### install pip ####
+wget https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
+ERROR:certificate common name "www.python.org" doesn't match requested host name "pypi.python.org".
+To connect to pypi.python.org insecurely,use '--no-check-certificate'.
+wget --no-check-certificate https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
+tar -xzvf pip-9.0.1.tar.gz
+cd pip-9.0.1
+/data/home/xjsjxly/fly/python/bin/python2.7 setup.py install
+#### pip install package without root permission for python youself####
+$python2.7 -m pip install networkx
+$python2.7 -m pip install opencv-python(3.3.0.10)
+$python2.7 -m pip install numpy(1.13.1)
+$python2.7 -m pip install pandas(0.20.3)
+$python2.7 -m pip install PIL(4.2.1)
+$python2.7 -m pip install scikit-image(0.13.0)
+$python2.7 -m pip install matplotlib
+#### scp file transfer ####
+#copy file to remote directory
+#scp filename username@ip:/directory
+scp changefile.csv xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
+#copy directory to remote directory
+#scp -r directory username@ip:/directory
+scp -r data xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
 ``` 
