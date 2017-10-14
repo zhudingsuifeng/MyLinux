@@ -128,4 +128,9 @@ scp changefile.csv xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
 scp -r data xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
 #### version problem ####
 Pay attention to the version of the package, or return some inexplicable error.
+#### 自强4000 ####
+ssh xjsjxly@sc.shu.edu.cn
+password:xly@zq4000
+$bsub</myjobscript -q priority   #job submission -q --specify the queue
+$bjobs -u xjsjxly    #job monitoring  -u --user nem 
 ``` 
