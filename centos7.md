@@ -96,7 +96,7 @@ exec bash --login
 #缺少一些模块(libffi-devel python-devel openssl-devel)，执行安装之后就可以了
 #yum install gcc libffi-devel python-devel openssl-devel
 #pip install scikit-image(0.13.0)
-#pip install matplotlib
+#pip install matplotlib(2.0.2)
 #### install setuptools ####
 Before installing pip ,we should install setuptools ,because of depend.
 wget --no-check-certificate https://pypi.python.org/packages/45/29/8814bf414e7cd1031e1a3c8a4169218376e284ea2553cc0822a6ea1c2d78/setuptools-36.6.0.zip#md5=74663b15117d9a2cc5295d76011e6fd1
@@ -118,7 +118,7 @@ $python2.7 -m pip install numpy(1.13.1)
 $python2.7 -m pip install pandas(0.20.3)
 $python2.7 -m pip install PIL(4.2.1)
 $python2.7 -m pip install scikit-image(0.13.0)
-$python2.7 -m pip install matplotlib
+$python2.7 -m pip install matplotlib(2.0.2)
 #### scp file transfer ####
 #copy file to remote directory
 #scp filename username@ip:/directory
@@ -126,4 +126,6 @@ scp changefile.csv xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
 #copy directory to remote directory
 #scp -r directory username@ip:/directory
 scp -r data xjsjxly@sc.shu.edu.cn:/data/home/xjsjxly/fly
+#### version problem ####
+Pay attention to the version of the package, or return some inexplicable error.
 ``` 
