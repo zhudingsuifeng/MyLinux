@@ -133,4 +133,10 @@ ssh xjsjxly@sc.shu.edu.cn
 password:xly@zq4000
 $bsub</myjobscript -q priority   #job submission -q --specify the queue
 $bjobs -u xjsjxly    #job monitoring  -u --user nem 
+$bkill job_id     #kill job 
 ``` 
+### u盘格式化小技巧
+- fdisk -l   #查看盘符
+- umount /dev/sdb
+- umount /dev/sdb1  #把要格式化的u盘卸载
+- mkfs.vfat /dev/sdb   #u盘格式化
