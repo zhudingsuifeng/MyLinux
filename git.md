@@ -56,6 +56,7 @@ git branch -d manual           #删除manual分支(只是删除本地分支，gi
 git push origin -d manual      #这样删除之后，GitHub上的远程分支manual就被删除掉了，这个删除和本地是独立的，如果只删除远程分支，本地分支还在
 git branch -D manual           #强制删除manual分支
 git merge manual               #将manual分支合并到当前分支(只是合并本地分支)
+git push origin branchname     #将分支发布在github上
 git push -u origin master      #push之后，在github上才能看到合并之后的结果
 git rebase master              #将master分之上超前的提交，变基到当前分支
 ```
