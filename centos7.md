@@ -105,7 +105,7 @@ cd setuptools-36.6.0
 /data/home/xjsjxly/fly/python/bin/python2.7 setup.py install 
 #### install pip ####
 wget https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
-ERROR:certificate common name "www.python.org" doesn't match requested host name "pypi.python.org".
+ERROR:certificate common name "www.python.org" doesn\'t match requested host name "pypi.python.org".
 To connect to pypi.python.org insecurely,use '--no-check-certificate'.
 wget --no-check-certificate https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
 tar -xzvf pip-9.0.1.tar.gz
