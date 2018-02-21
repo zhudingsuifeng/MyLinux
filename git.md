@@ -11,6 +11,16 @@
 - 用户头像->Settings->SSH and GPG keys->New SSH key->给SSH取个名字，将~/.ssh/id_rsa.pub中的内容复制到key中。
 - ssh git@github.com
 - 显示Hi zhudingsufieng!You've successfully authenticated,but GitHub does not provide shell access.Connection to github.com closed.则ssh连接成功。
+- 当再次执行ssh-keygen -t rsa把之前的文件覆盖之后，经过一系列修改并不管用。会一直报错：
+```javascript
+sign_and_send_pubkey:signing failed:agent refused operation
+Permission denied(publickey).
+fatal:Could not read from remote repository.
+Please make sure you have the correct access rights and the repository exists.
+#执行如下命令就可以正常使用了，暂时还不明白原理。
+$eval 'ssh-agent -s'
+$ssh-add
+```
 - git init   #在本地建立一个目录，之后git init初始化仓库。
 - git add README.md
 - git commit -m "networkx"    #向本地分支提交内容。
