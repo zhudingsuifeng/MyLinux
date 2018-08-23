@@ -1,0 +1,13 @@
+#### 虚拟机tools安装
+- mount命令挂载/dev/cdrom文件，cdrom是一个链接文件，链接到/dev/sr0。
+- 另外mount命令需要管理员权限，普通用户执行不了
+- #mount /dev/cdrom /mnt      //后面是你想挂载到的目录
+- 把需要的文件复制到自己的目录下。
+- #cp /mnt/VMwareTools.tar.gz  /home/hadoop
+- tar -xzvf VMwareTools.tar.gz 
+- cd vmware-tools-distrib
+- #./vmware-install.pl   //执行这个文件就可以了，需要管理员权限
+- centos7必须要更新之后，鼠标才能在虚拟机和实体机之间自由变换
+- #umount /dev/cdrom 
+- #umount /mnt/    //卸载文件
+- 安装VMtools的好处就是鼠标可以来回跳转，比较方便，是桌面版的话，还能互相复制文件

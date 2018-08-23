@@ -1,0 +1,22 @@
+## 安装networkX遇到的一些问题
+#### centos7安装Python3，处理自带Python2兼容问题
+- alternatives --install /bin/python python /usr/local/python* 2 最后一个数字代表优先级，数字越大优先级越高
+- alternatives --display python 查看当前安装的Python版本，状态
+- python - status is auto.说明当前状态为auto(centos7默认状态),还有一个状态是manual。
+- alternatives --auto python 把python状态修改为auto，在这个状态下，默认选择使用优先级高的程序。这样把Python3的优先级设置的高于Python2的优先级，平常使用Python3，当遇到必须使用Python2的程序(yum)，并不会转到Python2.
+- alternatives这个命令并不能神奇的对不同的命令执行不同的程序版本。这个命令存在的意义，就是为了方便管理，查看所有版本，能够通过一条命令(--config)修改程序版本，省去了修改文件的麻烦。
+- --install之后，默认的模式是auto，一旦做出任意修改模式状态会变为manual,通过--auto来修改manual状态为auto.这就是只有--auto选项的原因。
+- 还有一个问题：yum只支持python2，需要修改#!/usr/bin/python 才能在运行的时候区分python3和python2.
+- which yum #查看yum文件位置
+- vi /bin/yum     #打开可执行文件
+- 修改#!/usr/bin/python 为#!/usr/bin/python2 ,保存修改，在次执行yum的时候，就不会报语法错误了。
+- 要安装networkX需要先安装python-pip.
+- 直接使用yum install python-pip时会报错，显示No package python-pip available.没有python-pip软件包可以安装。为了能够安装这些包，需要先安装扩展源epel.
+- #yum -y install epel-release #-y 的意思，是在后续安装过程中，需要问我们是否同意的时候，一致回答yes.
+- #yum -y install python-pip #现在就可以安装python-pip了。
+- 利用pip安装networkX，但是在安装networkX之前需要安装矩阵处理包numpy和图形绘制包matplotlib.安装命令如下：
+- #pip install numpy
+- #pip install matplotlib    #在centos7下执行安装会报错error:command 'gcc' failed with exit status 1
+- 缺少一些模块(libffi-devel python-devel openssl-devel)，执行安装之后就可以了
+- #yum install gcc libffi-devel python-devel openssl-devel
+- #pip install networkx
