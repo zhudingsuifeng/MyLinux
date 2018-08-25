@@ -57,8 +57,27 @@ Run
 	git config user.name \"zhudingsuifeng\"
 to set your account\'s default identity.
 ```
-- python3
-- graphics driver
+- nvidia cuda
+```javascript
+$lspci |grep -i nvidia    #verify the cuda functionality of the gpu
+01:00.0 VGA compatible controller: NVIDIA corporation GM107[Geforce GTX 745]
+$uname -m && cat /etc/*release     #x86_64  your os is 64bit
+$nvidia-smi       #view the nvidia information
+zsh:command not found:nvidia-smi
+#apt install nvidia-utils-390
+#ubuntu-drivers autoinstall
+$gcc --version    #check your gcc version
+$g++ --version    #check your g++ version 
+#apt install gcc  #install gcc (default gcc7)
+#apt install g++  #install g++ (default g++7)
+#download the CUDA Toolkit with corresponding release.(deb[local])
+$md5sum <file>    #md5 verify download file
+comparison check code from https://developer.download.nvidia.com/compute/cuda/9.2/Prod2/docs/sidebar/md5sum-c.txt
+#dpkg -i cuda-repo-ubuntu1604-9-2-local_9.2.148-1_amd64.deb
+#apt-key add /var/cuda-repo-9-2-local/7fa2af80.pub
+#apt update
+#apt install cuda 
+```
 - docker
 - tensorflow
 
