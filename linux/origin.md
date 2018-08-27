@@ -24,9 +24,9 @@ dpkg -s package    #search the package information
 - add 
 ```javascript
 set nocompatible 
-\"setting compatibility
+"setting compatibility
 set backspace=2  
-\"backspace could remove any char
+"backspace could remove any char
 ```
 - it represents the comment after the \"
 - set vim
@@ -57,19 +57,31 @@ Run
 	git config user.name \"zhudingsuifeng\"
 to set your account\'s default identity.
 ```
-- nvidia cuda
+- Install nvidia390 driver,cuda toolit9.1 and cudnn7.1
 ```javascript
-$lspci |grep -i nvidia    #verify the cuda functionality of the gpu
-01:00.0 VGA compatible controller: NVIDIA corporation GM107[Geforce GTX 745]
-$uname -m && cat /etc/*release     #x86_64  your os is 64bit
-$nvidia-smi       #view the nvidia information
-zsh:command not found:nvidia-smi
-#apt install nvidia-utils-390
-#ubuntu-drivers autoinstall
+#apt update
+#apt upgrade
+$nvidia-smi       #view the nvidia information.If the driver information is displayed normally,you do not need to install it again.
+#apt install nvidia-utils-390    #install nvidia driver manually
+#ubuntu-drivers devices    #view drivers with ubuntu
+#ubuntu-drivers autoinstall     #autoinstall drivers recommand
 $gcc --version    #check your gcc version
 $g++ --version    #check your g++ version 
 #apt install gcc  #install gcc (default gcc7)
 #apt install g++  #install g++ (default g++7)
+#apt install gcc-5 g++-5  #install software with release
+#update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5   #modify software version priority. 
+#apt install nvidia-cuda-toolkit   #install cuda9.1 toolkit in ubuntu18 default.
+$nvcc -V     #information cuda version,if cuda9.1 is normal ,you do not have to install it manually.
+Download and install cudnn (cudnn-9.1-linux-x64-v7.1.tgz),you need register and log in.
+$cd Downloads
+$tar -zxf cudnn-9.1-linux-x64-v7.1.tgz
+$cd cuda
+$mkdir -p lib/x86_64-linux-gnu
+$mv lib64/* lib/x86_64-linux-gnu
+$rm -rvf lib64
+#rsync -avp ./ /usr
+$nvcc -V     #information cuda version,if cuda9.1 is normal ,you do not have to install it manually.
 #download the CUDA Toolkit with corresponding release.(deb[local])
 $md5sum <file>    #md5 verify download file
 comparison check code from https://developer.download.nvidia.com/compute/cuda/9.2/Prod2/docs/sidebar/md5sum-c.txt
@@ -78,6 +90,37 @@ comparison check code from https://developer.download.nvidia.com/compute/cuda/9.
 #apt update
 #apt install cuda 
 ```
-- docker
-- tensorflow
-
+### Install tensorflow with pip3
+```javascript
+#apt install python3-pip
+Download and install tensorflow from https://github.com/mind/wheels/releases/
+#pip3 install tesorflow-1.8.0-cp36-cp36m-linux_x86_64.whl  #install tensorflow with pip3 and python3.6.5
+#verify the installation is correct
+$python3
+import tensorflow as tf
+hello=tf.constant('hello,tensorflow')
+sess=tf.Session()     #maybe need many time
+print(sess.run(hello))
+>>>hello,tensorflow
+```
+### Install tensorflow with docker
+```javascript
+#groupadd docker              #add group
+#usermod -aG docker $USER     #add user to group
+$groups                       #display the group to which the user belongs.
+#apt install docker.io     #install docker default version of ubuntu18.04
+#apt remove docker docker-engine docker-ce docker.io  #remove docker install before
+#apt update
+#apt install -y apt-transport-https ca-certificates curl software-properties-common
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg |apt-key add -
+#add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#apt update
+#apt install docker-ce
+$docker run hello-world
+$docker --version         #information of the docker version
+Docker version 18.06.1-ce
+#apt install -y nvidia-docker2
+#reboot
+$nvidia-docker run --name tensorflow -it tensorflow/tensorflow:latest-gpu bash         #start tensorflow docker with nvidia support
+#pip3 default python3.6 ,nvidia-docker default python2.7
+```
