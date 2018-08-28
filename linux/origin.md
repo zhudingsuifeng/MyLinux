@@ -21,10 +21,9 @@
 ### vim 
 - In vi insert mode,can not delete char using backspace.
 - sudo vi /etc/vim/vimrc.tiny
-
 ```
 set nocompatible 
-\"setting compatibility
+&quot;setting compatibility
 set backspace=2  
 \"backspace could remove any char
 set nu    #set line number
