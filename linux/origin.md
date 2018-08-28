@@ -20,12 +20,12 @@
 - 还是存在一些问题，不知道是不是机械键盘太灵敏的缘故。时好时坏。也有可能是远程连接的问题，直接使用本地键盘，完全没有问题。
 ### vim 
 - In vi insert mode,can not delete char using backspace.
-- sudo vi /etc/vim/vimrc.tiny
-```
-set nocompatible 
-&quot;setting compatibility
-set backspace=2  
-\"backspace could remove any char
+```javascript
+sudo vi /etc/vim/vimrc.tiny
+add the following code in the file 
+comments in the vimrc.tiny begin with "
+set nocompatible #setting compatibility
+set backspace=2  #backspace could remove any char
 set nu    #set line number
 set ts=4  #set tab = 4 space
 ```
