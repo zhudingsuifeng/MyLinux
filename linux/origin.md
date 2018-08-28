@@ -24,13 +24,9 @@
 - add 
 ```javascript
 set nocompatible 
-"setting compatibility
+&quot;setting compatibility
 set backspace=2  
-"backspace could remove any char
-```
-- it represents the comment after the \"
-- set vim
-```javascript
+&quot;backspace could remove any char
 set nu    #set line number
 set ts=4  #set tab = 4 space
 ```
