@@ -32,11 +32,11 @@ set ts=4  #set tab = 4 space
 ```
 ### oh my zsh
 ```javascript
-sudo su
-apt install zsh
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-chsh -s /bin/zsh
-sudo reboot
+$sudo su
+#apt install zsh
+$sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"  #install theme to current shell
+$chsh -s /bin/zsh         #change the current shell
+$sudo reboot
 ```
 - git
 ```javascript
