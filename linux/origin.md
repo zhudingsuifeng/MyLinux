@@ -6,13 +6,13 @@
 - If the HP computer monitor is black after booting up,perhaps because it is an integrated graphics card,not a discrete graphics card.
 ### dpkg install teamviewer
 ```javascript
-dpkg -i *.deb      #installing *.deb app use dpkg
-apt -f -y install  #save the dependency problem with *.deb
-dpkg -l |grep *software  #list the software version
-dpkg -L package    #list the dependency file about the installed software
-dpkg -P *software name  #uninstall software that install by dpkg not save the configuration
-dpkg -r *software name  #uninstall softwave that install by dpkg save the configuration
-dpkg -s package    #search the package information
+#dpkg -i *.deb      #installing *.deb app use dpkg
+#apt -f -y install  #save the dependency problem with *.deb
+#dpkg -l |grep *software  #list the software version
+#dpkg -L package    #list the dependency file about the installed software
+#dpkg -P *software name  #uninstall software that install by dpkg not save the configuration
+#dpkg -r *software name  #uninstall softwave that install by dpkg save the configuration
+#dpkg -s package    #search the package information
 ```
 - set unattended
 ### 搜狗拼音shift中英文切换问题
