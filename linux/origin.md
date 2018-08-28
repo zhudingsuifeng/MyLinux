@@ -40,13 +40,13 @@ $sudo reboot
 ```
 - git
 ```javascript
-sudo su
-apt install git
-ssh-keygen -t rsa
+$sudo su
+#apt install git
+$ssh-keygen -t rsa
 add ~/.ssh/id_rsa.pub to SSH and GPG keys
-ssh git@github.com
-git clone git@github.com:zhudingsuifeng/*.git
-git push -u origin master
+$ssh git@github.com
+$git clone git@github.com:zhudingsuifeng/*.git
+$git push -u origin master
 *** Please tell me who you are.
 Run
 	git config user.email \"1002557401@qq.com\"
@@ -117,6 +117,7 @@ $docker --version         #information of the docker version
 Docker version 18.06.1-ce
 #apt install -y nvidia-docker2
 #reboot
-$nvidia-docker run --name tensorflow -it tensorflow/tensorflow:latest-gpu bash         #start tensorflow docker with nvidia support
+$nvidia-docker run --name tensorflow -it tensorflow/tensorflow:latest-gpu bash
+#start tensorflow docker with nvidia support
 #pip3 default python3.6 ,nvidia-docker default python2.7
 ```
