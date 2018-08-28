@@ -22,6 +22,7 @@
 - In vi insert mode,can not delete char using backspace.
 - sudo vi /etc/vim/vimrc.tiny
 - add 
+- &quot;
 ```javascript
 set nocompatible 
 \&quot;setting compatibility
