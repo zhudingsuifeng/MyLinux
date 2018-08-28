@@ -23,7 +23,7 @@
 ```javascript
 sudo vi /etc/vim/vimrc.tiny
 add the following code in the file 
-comments in the vimrc.tiny begin with \"
+comments in the vimrc.tiny begin with double quotes
 set nocompatible #setting compatibility
 set backspace=2  #backspace could remove any char
 set nu    #set line number
