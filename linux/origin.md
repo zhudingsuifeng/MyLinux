@@ -5,7 +5,7 @@
 - you should press the Esc to enter BIOS when the computer is power.
 - If the HP computer monitor is black after booting up,perhaps because it is an integrated graphics card,not a discrete graphics card.
 ### dpkg install teamviewer
-```javascript
+```
 #dpkg -i *.deb      #installing *.deb app use dpkg
 #apt -f -y install  #save the dependency problem with *.deb
 #dpkg -l |grep *software  #list the software version
@@ -22,7 +22,7 @@
 - In vi insert mode,can not delete char using backspace.
 - sudo vi /etc/vim/vimrc.tiny
 - add 
-```javascript
+```
 set nocompatible 
 &quot;setting compatibility
 set backspace=2  
@@ -31,10 +31,11 @@ set nu    #set line number
 set ts=4  #set tab = 4 space
 ```
 ### oh my zsh
-```javascript
+```
 $sudo su
 #apt install zsh
-$sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"  #install theme to current shell
+$sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"  
+#install theme to current shell
 $chsh -s /bin/zsh         #change the current shell
 $sudo reboot
 ```
