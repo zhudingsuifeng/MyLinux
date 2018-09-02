@@ -26,6 +26,7 @@ add the following code in the file
 comments in the vimrc.tiny begin with double quotes
 set nocompatible #setting compatibility
 set backspace=2  #backspace could remove any char
+vi /etc/vim/vimrc
 set nu    #set line number
 set ts=4  #set tab = 4 space
 ```
