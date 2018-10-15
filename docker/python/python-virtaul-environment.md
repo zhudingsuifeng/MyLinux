@@ -10,10 +10,10 @@ $virtualenv venv       # build a virtual envrionment which named venv
 # venv是新创建的虚拟环境的名称。同时会在当前目录下创建一个与虚拟环境名称相同的文件夹。
 $virtualenv -p /usr/bin/python3 --no-site-package venv
 # -p 指定解释器路径，可以指定虚拟环境的python版本。
-# --no-site-packates,已经安装到系统python环境的所有第三方包都不会复制过来，得到一个不带任何第三方包的“干净”的python运行环境。
+# --no-site-packates,已经安装到系统python环境的第三方包不会复制过来，得到不带任何第三方包的“干净”的python运行环境。
 $source venv/bin/activate  #activate script (venv)
 # 通过source命令进入虚拟环境，注意到命令提示符有所变化，前面多了一个(venv)，表示当前环境是一个名为venv的python环境。
-<font color=red>(venv)</font>->venv
+(venv)->venv
 $pip install django   #install app
 # 在venv环境下，用pip安装的包都被安装到venv这个环境下，系统python环境不受任何影响。
 $deactivate   #deactivate script
