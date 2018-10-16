@@ -30,8 +30,16 @@ $rm -r venv   #delete virtual envrionment
 ### install and use virtualenvwrapper
 
 ### venv
-
-
+- venv是python3.3之后的版本中自带的构建虚拟环境的包，存了替代virtualenv的心思，使用方法也和virtualenv类似，但是只能支持python3.3之后的版本，并且不够灵活，有一定的局限性。
+```javascript
+#apt install python3-venv
+$python -m venv .  # build a virtual environment in current directory
+$source bin/activate   # activate script
+(tes)->test        # 使用方面和virtualenv类似，但是没发现指定python版本的命令
+$deactivate        # deactivate script
+$rm -rf test       # remove the virtual environment
+$python -h venv    # show help message and exit
+```
 ### pyenv
 ```javascript
 # ubuntu requirements
