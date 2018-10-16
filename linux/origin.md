@@ -1,4 +1,4 @@
-## building my ubuntu from scratch
+## building a ubuntu with nvidia driver from scratch
 ### make a multi-system U disk boot disk.
 - using multibootusb software could make a multi-system boot disk easily.
 ### hp BIOS
