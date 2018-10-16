@@ -11,6 +11,7 @@ $virtualenv venv       # build a virtual envrionment which named venv
 # venv是新创建的虚拟环境的名称。同时会在当前目录下创建一个与虚拟环境名称相同的文件夹。
 $virtualenv -p /usr/bin/python3 --no-site-package venv
 # -p 指定解释器路径，可以指定虚拟环境的python版本。
+# 注意，这里要指定对应目录下解释器的版本，一定要在对应目录的上一级目录进行操作。
 # --no-site-packates,已经安装到系统python环境的第三方包不会复制过来，得到不带任何第三方包的“干净”的python运行环境。
 $source venv/bin/activate  #activate script (venv)
 # 通过source命令进入虚拟环境，注意到命令提示符有所变化，前面多了一个(venv)，表示当前环境是一个名为venv的python环境。
@@ -28,7 +29,26 @@ $rm -r venv   #delete virtual envrionment
 ```
 - 当需要删除虚拟环境时，需要删除他的文件夹rm - rf venv。这里使用virtualenv有些不方便，因为virtualenv的启动，停止脚本都在特定的文件夹，可能一段时间后，可能有很多个虚拟环境散落在系统各处，可能早已忘记了虚拟环境的名字和位置。
 ### install and use virtualenvwrapper
-
+- 鉴于virtualenv不便于对虚拟环境集中管理，所以推荐直接使用virtualenvwrapper。wirtualenvwrapper提供了一系列命令使得虚拟环境工作便利。他把所有的虚拟环境都放在一个地方。
+- 下面所写的安装过程是在ubuntu18.04下进行的，和以往的版本会有所不同，主要是安装路径有所改变。
+```javascript
+$pip2 install virtualenv
+$pip2 install virtualenvwrapper
+$pip3 install virtualenv
+$pip3 install virtualenvwrapper     # install virtualenvwrapper
+# virtualenvwrapper依赖于virtualenv，同时在python2和python3中安装方便后面指定版本，不然会报错。
+$mkdir ~/.Envs
+#add configurations to ~/.zshrc
+export WORKON_HOME=~/.Envs  #创建的虚拟环境目录会在该文件夹下
+source ~/.local/bin/virtualenvwrapper.sh
+$source ~/.zshrc
+$mkvirtualenv -p python2 py2  #bulid virtual environment named py2 with python2 interpreter
+(py2)->~                     # entering py2 virtual environment
+(py2)-> ~ deactivate         # exit py2 virtual environment
+$workon                      # list virtual environment
+$workon py2                  # entering py2 virtual environment
+$rmvirtualenv py2            # remove py2 virtual environment
+```
 ### venv
 - venv是python3.3之后的版本中自带的构建虚拟环境的包，存了替代virtualenv的心思，使用方法也和virtualenv类似，但是只能支持python3.3之后的版本，并且不够灵活，有一定的局限性。
 ```javascript
