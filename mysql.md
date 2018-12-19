@@ -6,6 +6,7 @@ $sudo su
 #apt install mysql-server
 #apt install mysql-client
 #apt install libmysqlclient-dev
+#apt autoremove --purge mysql-server #卸载mysql-server
 #mysql   #需要root权限才能正常登陆，不然报错
 mysql>show databases;
 mysql>use mysql;
@@ -20,6 +21,7 @@ mysql>select user,host,plugin from user;
 +------------------+-----------+-----------------------+
 4 rows in set (0.00 sec)
 mysql>create user 'fly'@'%' identified by 'passwd';
+# create user 用户名@登陆IP identified by "密码";
 mysql>select host,user,plugin from user;
 +-----------+------------------+-----------------------+
 | host      | user             | plugin                |
@@ -33,16 +35,34 @@ mysql>select host,user,plugin from user;
 mysql>exit
 #exit
 $mysql -u fly -p
-mysql>
+mysql>show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
++--------------------+
+mysql>exit
+#mysql
+mysql>create database web;
+mysql>show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| web                |
++--------------------+
+mysql>grant all privileges on web.* fly@'%' identified by 'passwd';
+# grant 权限 on 数据库.* to 用户名@登陆主机 identified by "密码";
+mysql>exit
+#mysql -u fly -p 
+mysql>show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| web                |
++--------------------+
 ```
-```
-mysql>create user 'fly'@'%' identified by 'passwd';
-```
-
-fly 是用户名。
-
-@ 后面跟要链接到mysql数据库的客户端的IP地址，%代表全部IP均可链接。
-
-passwd 是要给fly用户设置的用户密码。
-
-
