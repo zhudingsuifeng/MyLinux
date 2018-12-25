@@ -154,7 +154,7 @@ mysql>create table student(
 # 插入数据
 mysql>insert into student(id, name, age) values(1, 'fly', 24);
 mysql>insert into student(id, name, age) values(2, 'test', 24);
-# 查询数据
+# 查询数据[select](https://github.com/zhudingsuifeng/platform/blob/master/sql/select.md)
 mysql>select * from student;
 +------+------+------+
 | id   | name | age  |
