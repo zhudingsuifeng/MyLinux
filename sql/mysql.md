@@ -154,7 +154,7 @@ mysql>create table student(
 # 插入数据
 mysql>insert into student(id, name, age) values(1, 'fly', 24);
 mysql>insert into student(id, name, age) values(2, 'test', 24);
-# 查询数据[select](https://github.com/zhudingsuifeng/platform/blob/master/sql/select.md)
+# 查询数据
 mysql>select * from student;
 +------+------+------+
 | id   | name | age  |
@@ -187,3 +187,4 @@ mysql>drop table student;
 # 查看表
 mysql>show tables;
 ```
+### 有关[select](https://github.com/zhudingsuifeng/platform/blob/master/sql/select.md)的详细用法，在这里介绍
