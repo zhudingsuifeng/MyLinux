@@ -180,6 +180,88 @@ mysql>select * from student;
 +------+------+------+
 |    1 | fly  |   24 |
 +------+------+------+
+# 向表中添加一列
+mysql>alter table student add column math int;
+mysql>select * from student;
++------+------+------+------+
+| id   | name | age  | math |
++------+------+------+------+
+|    1 | fly  |   24 | NULL |
++------+------+------+------+
+# 向表中添加多列
+mysql>alter table student add column english int, add chinese int;
+mysql>select * from student;
++------+------+------+------+---------+---------+
+| id   | name | age  | math | english | chinese |
++------+------+------+------+---------+---------+
+|    1 | fly  |   24 | NULL |    NULL |    NULL |
++------+------+------+------+---------+---------+
+# 更改列名
+mysql>alter table student change column chinese history int;
+mysql>select * from student;
++------+------+------+------+---------+---------+
+| id   | name | age  | math | english | history |
++------+------+------+------+---------+---------+
+|    1 | fly  |   24 | NULL |    NULL |    NULL |
++------+------+------+------+---------+---------+
+# 显示表结构
+mysql>desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
+| math    | int(11)     | YES  |     | NULL    |       |
+| english | int(11)     | YES  |     | NULL    |       |
+| history | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+# 修改表列类型
+mysql>alter table student modify history char(10);
+mysql>desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
+| math    | int(11)     | YES  |     | NULL    |       |
+| english | int(11)     | YES  |     | NULL    |       |
+| history | char(10)    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+# 删除表列
+mysql>alter table student drop column history;
+mysql>select * from student;
++------+------+------+------+---------+
+| id   | name | age  | math | english |
++------+------+------+------+---------+
+|    1 | fly  |   24 | NULL |    NULL |
++------+------+------+------+---------+
+# 修改表名
+mysql>alter table student rename people;
+mysql>show tables;
++---------------+
+| Tables_in_web |
++---------------+
+| people        |
++---------------+
+# 更新表数据
+mysql>update student set math=80, english=68, history=100 where id =1;
+mysql>select * from student;
++------+------+------+------+---------+---------+
+| id   | name | age  | math | english | history |
++------+------+------+------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 |
++------+------+------+------+---------+---------+
+# 向表中插入数据
+mysql>insert into student values(2, 'test', 30, 60, 50, 80);
+mysql>select * from student;
++------+------+------+------+---------+---------+
+| id   | name | age  | math | english | history |
++------+------+------+------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 |
+|    2 | test |   30 |   60 |      50 |      80 |
++------+------+------+------+---------+---------+
 # 删除所有数据
 mysql>delete from student;
 # 删除表
