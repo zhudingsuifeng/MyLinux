@@ -498,10 +498,14 @@ mysql> select teacher,count(*) from student group by teacher;
 | wu      |        2 |
 +---------+----------+
 mysql> select * from student group by teacher;
-ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'web.student.id' which is not functionally dependent on columns in GROUP BY clause;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause \
+and contains nonaggregated column 'web.student.id' \
+which is not functionally dependent on columns in GROUP BY clause;
 # select 字段中包含的内容在group by每个分组中有多个不同的相应字段无法在一行表中显示
 # having 分组查询之后筛选
-mysql> select teacher,count(*) from student group by teacher having teacher='liu';
+mysql> select teacher,count(*) from student 
+     > group by teacher 
+     > having teacher='liu';
 +---------+----------+
 | teacher | count(*) |
 +---------+----------+
@@ -526,8 +530,10 @@ mysql> select * from teacher;
 |    1 | liu  |   50 |
 |    2 | wu   |   60 |
 +------+------+------+
-# 嵌套在其他查询中的查询，称之为子查询。执行过程由里向外，里层查询结果作为外层查询的条件。
-mysql> select * from student where teacher in (select name from teacher where name='liu');
+# 嵌套在其他查询中的查询，称之为子查询。
+# 执行过程由里向外，里层查询结果作为外层查询的条件。
+mysql> select * from student 
+     > where teacher in (select name from teacher where name='liu');
 +------+------+------+------+---------+---------+---------+
 | id   | name | age  | math | english | history | teacher |
 +------+------+------+------+---------+---------+---------+
@@ -539,8 +545,11 @@ mysql> select * from student where teacher in (select name from teacher where na
 ### join表连接(连接查询)
 
 ```
-# 在处理多个表时，子查询只有在结果来自一个表时才有用。但如果需要显示两个表或多个表中的数据，这时就必须使用连接(join)操作。连接的基本思想是把两个或多个表当做一个新的表来操作。
-mysql> select student.name,student.age,teacher.name from student,teacher where student.teacher=teacher.name;
+# 在处理多个表时，子查询只有在结果来自一个表时才有用。
+# 但如果需要显示两个表或多个表中的数据，这时就必须使用连接(join)操作。
+# 连接的基本思想是把两个或多个表当做一个新的表来操作。
+mysql> select student.name,student.age,teacher.name from student,teacher 
+     > where student.teacher=teacher.name;
 +------+------+------+
 | name | age  | name |
 +------+------+------+
@@ -549,7 +558,8 @@ mysql> select student.name,student.age,teacher.name from student,teacher where s
 | sky  |   27 | liu  |
 | snow |   40 | wu   |
 +------+------+------+
-mysql> select student.*,teacher.age from student,teacher where student.teacher=teacher.name;
+mysql> select student.*,teacher.age from student,teacher 
+     > where student.teacher=teacher.name;
 +------+------+------+------+---------+---------+---------+------+
 | id   | name | age  | math | english | history | teacher | age  |
 +------+------+------+------+---------+---------+---------+------+
@@ -559,7 +569,9 @@ mysql> select student.*,teacher.age from student,teacher where student.teacher=t
 |    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
 +------+------+------+------+---------+---------+---------+------+
 # 内连接(table1 join table2 on 条件)
-mysql> select student.name,student.age,teacher.name from student join teacher on student.teacher=teacher.name;
+mysql> select student.name,student.age,teacher.name from student 
+     > join teacher 
+     > on student.teacher=teacher.name;
 +------+------+------+
 | name | age  | name |
 +------+------+------+
@@ -568,7 +580,9 @@ mysql> select student.name,student.age,teacher.name from student join teacher on
 | sky  |   27 | liu  |
 | snow |   40 | wu   |
 +------+------+------+
-mysql> select student.*,teacher.age from student join teacher on student.teacher=teacher.name;
+mysql> select student.*,teacher.age from student 
+     > join teacher 
+     > on student.teacher=teacher.name;
 +------+------+------+------+---------+---------+---------+------+
 | id   | name | age  | math | english | history | teacher | age  |
 +------+------+------+------+---------+---------+---------+------+
@@ -578,7 +592,9 @@ mysql> select student.*,teacher.age from student join teacher on student.teacher
 |    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
 +------+------+------+------+---------+---------+---------+------+
 # 左外链接(包含join左边表中的记录，甚至右边表中没有和他匹配的记录)
-mysql> select student.id,student.name,teacher.* from student left join teacher on student.id=teacher.id;
+mysql> select student.id,student.name,teacher.* from student 
+     > left join teacher 
+     > on student.id=teacher.id;
 +------+------+------+------+------+
 | id   | name | id   | name | age  |
 +------+------+------+------+------+
@@ -588,7 +604,9 @@ mysql> select student.id,student.name,teacher.* from student left join teacher o
 |    4 | snow | NULL | NULL | NULL |
 +------+------+------+------+------+
 # 右外链接(包含join右边表中的记录，甚至左边表中没有和他匹配的记录)
-mysql> select teacher.*,student.name from teacher right join student on teacher.id=student.id;
+mysql> select teacher.*,student.name from teacher 
+     > right join student 
+     > on teacher.id=student.id;
 +------+------+------+------+
 | id   | name | age  | name |
 +------+------+------+------+
