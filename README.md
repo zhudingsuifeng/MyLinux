@@ -14,6 +14,6 @@
 
 [sql](https://github.com/zhudingsuifeng/platform/tree/master/sql)
 
-[mysql](https://github.com/zhudingsuifeng/platform/blob/master/sql/mysql.md)
+[mysql](https://github.com/zhudingsuifeng/platform/blob/master/sql/mysqlStart.md)
 
-[select](https://github.com/zhudingsuifeng/platform/blob/master/sql/select.md)
+[select](https://github.com/zhudingsuifeng/platform/blob/master/sql/mysqlSelect.md)
