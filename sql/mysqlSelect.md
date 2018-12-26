@@ -40,6 +40,22 @@ LIMIT <limit_number>
 
 每步关键字执行的结果都会形成一个虚表，编号大的关键字执行的动作都是在编号小的关键字执行结果所得的虚表上进行。
 
+**where与having的区别：where是对记录进行筛选；而having是对按group by 进行分组后的组进行筛选。**
+
+from: 组装来自不同数据源的记录
+
+where: 根据指定的条件过滤上一步检索出的记录
+
+group by: 对上面过滤后的记录按指定条件分组
+
+having: 对所有分组根据指定条件进行过滤
+
+select: 从上一步过滤后的各个分组记录中提取指定查询的字段列表(包括聚合字段，计算字段，表达十字段等)
+
+order by field ... : 按照字段进行排序，desc(降序),asc(升序，默认)
+
+count: 计数使用
+
 ### 查询准备
 
 ```
@@ -210,7 +226,37 @@ mysql> select distinct math from student;
 +------+
 ```
 
-### where
+### union/union all(并集)
+
+```
+# union将两个子查询拼接起来并去重
+mysql> select * from student where id <4 union
+    -> select * from student where id >2;
++------+------+------+------+---------+---------+---------+
+| id   | name | age  | math | english | history | teacher |
++------+------+------+------+---------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |
+|    4 | snow |   40 |   70 |      80 |      90 | wu      |
++------+------+------+------+---------+---------+---------+
+# union all将两个子查询拼接起来但不去重
+mysql> select * from student where id <3 union all
+    -> select * from student where id >1;
++------+------+------+------+---------+---------+---------+
+| id   | name | age  | math | english | history | teacher |
++------+------+------+------+---------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |
+|    4 | snow |   40 |   70 |      80 |      90 | wu      |
++------+------+------+------+---------+---------+---------+
+```
+
+### mysql不支持的一些操作
+
+mysql不支持全连接(full join),差集(except),交集(intersect)操作。
 
 ```
 # =,>,<,>=,<=,<>,between
@@ -422,23 +468,134 @@ mysql> select count(name) from student;
 ### group by 分组查询
 
 ```
-```
-
-### having 分组查询之后筛选
-
-```
+mysql> alter table student add column teacher varchar(20);
+mysql> update student set teacher='liu' where name like '%y';
+mysql> update student set teacher='wu' where name='test';
+mysql> insert into student values(4, 'snow', 40, 70, 80, 90, 'wu');
+mysql> select * from student;
++------+------+------+------+---------+---------+---------+
+| id   | name | age  | math | english | history | teacher |
++------+------+------+------+---------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |
+|    4 | snow |   40 |   70 |      80 |      90 | wu      |
++------+------+------+------+---------+---------+---------+
+# 单独使用group by分组
+mysql> select teacher from student group by teacher;
++---------+
+| teacher |
++---------+
+| liu     |
+| wu      |
++---------+
+# group by和聚合函数(count)一起使用
+mysql> select teacher,count(*) from student group by teacher;
++---------+----------+
+| teacher | count(*) |
++---------+----------+
+| liu     |        2 |
+| wu      |        2 |
++---------+----------+
+mysql> select * from student group by teacher;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'web.student.id' which is not functionally dependent on columns in GROUP BY clause;
+# select 字段中包含的内容在group by每个分组中有多个不同的相应字段无法在一行表中显示
+# having 分组查询之后筛选
+mysql> select teacher,count(*) from student group by teacher having teacher='liu';
++---------+----------+
+| teacher | count(*) |
++---------+----------+
+| liu     |        2 |
++---------+----------+
 ```
 
 ### 子查询
 
 ```
+mysql> create table teacher(
+    -> id int,
+    -> name varchar(20),
+    -> age int
+    -> );
+mysql> insert into teacher values(1, 'liu', 50);
+mysql> insert into teacher values(2, 'wu', 60);
+mysql> select * from teacher;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | liu  |   50 |
+|    2 | wu   |   60 |
++------+------+------+
+# 嵌套在其他查询中的查询，称之为子查询。执行过程由里向外，里层查询结果作为外层查询的条件。
+mysql> select * from student where teacher in (select name from teacher where name='liu');
++------+------+------+------+---------+---------+---------+
+| id   | name | age  | math | english | history | teacher |
++------+------+------+------+---------+---------+---------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |
++------+------+------+------+---------+---------+---------+
 ```
 
-### 表连接(连接查询)
+### join表连接(连接查询)
 
 ```
-# 内连接
-# 外连接
-## 左连接
-## 右连接
+# 在处理多个表时，子查询只有在结果来自一个表时才有用。但如果需要显示两个表或多个表中的数据，这时就必须使用连接(join)操作。连接的基本思想是把两个或多个表当做一个新的表来操作。
+mysql> select student.name,student.age,teacher.name from student,teacher where student.teacher=teacher.name;
++------+------+------+
+| name | age  | name |
++------+------+------+
+| fly  |   24 | liu  |
+| test |   30 | wu   |
+| sky  |   27 | liu  |
+| snow |   40 | wu   |
++------+------+------+
+mysql> select student.*,teacher.age from student,teacher where student.teacher=teacher.name;
++------+------+------+------+---------+---------+---------+------+
+| id   | name | age  | math | english | history | teacher | age  |
++------+------+------+------+---------+---------+---------+------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |   50 |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |   60 |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |   50 |
+|    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
++------+------+------+------+---------+---------+---------+------+
+# 内连接(table1 join table2 on 条件)
+mysql> select student.name,student.age,teacher.name from student join teacher on student.teacher=teacher.name;
++------+------+------+
+| name | age  | name |
++------+------+------+
+| fly  |   24 | liu  |
+| test |   30 | wu   |
+| sky  |   27 | liu  |
+| snow |   40 | wu   |
++------+------+------+
+mysql> select student.*,teacher.age from student join teacher on student.teacher=teacher.name;
++------+------+------+------+---------+---------+---------+------+
+| id   | name | age  | math | english | history | teacher | age  |
++------+------+------+------+---------+---------+---------+------+
+|    1 | fly  |   24 |   80 |      68 |     100 | liu     |   50 |
+|    2 | test |   30 |   60 |      50 |      80 | wu      |   60 |
+|    3 | sky  |   27 |   80 |      68 |      80 | liu     |   50 |
+|    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
++------+------+------+------+---------+---------+---------+------+
+# 左外链接(包含join左边表中的记录，甚至右边表中没有和他匹配的记录)
+mysql> select student.id,student.name,teacher.* from student left join teacher on student.id=teacher.id;
++------+------+------+------+------+
+| id   | name | id   | name | age  |
++------+------+------+------+------+
+|    1 | fly  |    1 | liu  |   50 |
+|    2 | test |    2 | wu   |   60 |
+|    3 | sky  | NULL | NULL | NULL |
+|    4 | snow | NULL | NULL | NULL |
++------+------+------+------+------+
+# 右外链接(包含join右边表中的记录，甚至左边表中没有和他匹配的记录)
+mysql> select teacher.*,student.name from teacher right join student on teacher.id=student.id;
++------+------+------+------+
+| id   | name | age  | name |
++------+------+------+------+
+|    1 | liu  |   50 | fly  |
+|    2 | wu   |   60 | test |
+| NULL | NULL | NULL | sky  |
+| NULL | NULL | NULL | snow |
++------+------+------+------+
+# full全连接，将左右两个表的数据全部返回,mysql不支持full join.
 ```
