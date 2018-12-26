@@ -9,6 +9,12 @@ $sudo su
 #apt autoremove --purge mysql-server #卸载mysql-server
 #mysql   #需要root权限才能正常登陆，不然报错
 mysql>show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| web                |
++--------------------+
 mysql>status
 # 查看数据库状态
 --------------
@@ -35,6 +41,34 @@ Threads: 1  Questions: 34  Slow queries: 0  Opens: 114  Flush tables: 1  Open ta
 --------------
 mysql>use mysql;
 # 使用数据库mysql(切换数据库)
+mysql> show tables;
++---------------+
+| Tables_in_web |
++---------------+
+| student       |
+| teacher       |
++---------------+
+mysql> desc student;
+mysql> show columns from student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| age     | int(11)     | YES  |     | NULL    |       |
+| math    | int(11)     | YES  |     | NULL    |       |
+| english | int(11)     | YES  |     | NULL    |       |
+| history | int(11)     | YES  |     | NULL    |       |
+| teacher | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+mysql> show status;  # 用于显示广泛的服务器状态信息。
+mysql> show grants;  # 用啦显示用户权限
++----------------------------------------------+
+| Grants for fly@%                             |
++----------------------------------------------+
+| GRANT USAGE ON *.* TO 'fly'@'%'              |
+| GRANT ALL PRIVILEGES ON `web`.* TO 'fly'@'%' |
++----------------------------------------------+
 mysql>select database() mydb;
 # 查看当前登录的数据库(就是前面use <database>中的数据库)
 +-------+
@@ -51,7 +85,6 @@ mysql>select user,host,plugin from user;
 | mysql.sys        | localhost | mysql_native_password |
 | debian-sys-maint | localhost | mysql_native_password |
 +------------------+-----------+-----------------------+
-4 rows in set (0.00 sec)
 mysql>create user 'fly'@'%' identified by 'passwd';
 # create user 用户名@登陆IP identified by "密码";
 # 创建用户，登录IP，如果指定只能本地登录为"localhost",如果想要远程登录为"%".
