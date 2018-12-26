@@ -2,10 +2,20 @@
 
 ### select关键字
 
-sql查询语句中用到的关键词主要包含6个，书写顺序大致为(关键字不区分大小写)
+sql查询语句中用到的关键词主要包含7个，书写顺序大致为(关键字不区分大小写)
 
 ```
-select--from--where--group by--having--order by
++--------+-----------------------------+
+|  子句  | introduction                |
++--------+-----------------------------+
+| SELECT | 要返回的列或表达式          |
+| FROM   | 从中检索数据的表            |
+| WHERE  | 行级过滤                    |
+|GROUP BY| 分组说明                    |
+| HAVING | 组级过滤                    |
+|ORDER BY| 输出排序顺序                |
+|LIMIT   | 要检索的行数                |
++--------+-----------------------------+
 ```
 
 详细写法如下
@@ -94,7 +104,7 @@ mysql> select name from student;
 +------+
 ```
 
-### as
+### as/concat
 
 ```
 # 查询时指定别名(as 新名字)
@@ -104,6 +114,18 @@ mysql> select name as 'NAME' from student;
 +------+
 | fly  |
 +------+
+# concat()拼接串，即把多个串连接起来形成一个较长的串。
+mysql> select concat(name,age) from student;
++------------------+
+| concat(name,age) |
++------------------+
+| fly24            |
+| test30           |
+| sky27            |
+| snow40           |
+| flasky18         |
+| kaow27           |
++------------------+
 # 查询时添加常量列
 mysql> select name, 'i am a student' as 'who' from student;
 +------+----------------+
@@ -341,6 +363,7 @@ mysql> select * from student where age not in (24,27);
 |    2 | test |   30 |   60 |      50 |      80 |
 +------+------+------+------+---------+---------+
 # and 的优先级高于or优先级。遇到or和and并存的情况要注意优先级，圆括号可以改变mysql计算的优先级。
+# mysql 中not 支持对in, between和exists子句取反.
 ```
 
 ### like模糊查询与通配符_和%
@@ -540,80 +563,4 @@ mysql> select * from student
 |    1 | fly  |   24 |   80 |      68 |     100 | liu     |
 |    3 | sky  |   27 |   80 |      68 |      80 | liu     |
 +------+------+------+------+---------+---------+---------+
-```
-
-### join表连接(连接查询)
-
-```
-# 在处理多个表时，子查询只有在结果来自一个表时才有用。
-# 但如果需要显示两个表或多个表中的数据，这时就必须使用连接(join)操作。
-# 连接的基本思想是把两个或多个表当做一个新的表来操作。
-mysql> select student.name,student.age,teacher.name from student,teacher 
-     > where student.teacher=teacher.name;
-+------+------+------+
-| name | age  | name |
-+------+------+------+
-| fly  |   24 | liu  |
-| test |   30 | wu   |
-| sky  |   27 | liu  |
-| snow |   40 | wu   |
-+------+------+------+
-mysql> select student.*,teacher.age from student,teacher 
-     > where student.teacher=teacher.name;
-+------+------+------+------+---------+---------+---------+------+
-| id   | name | age  | math | english | history | teacher | age  |
-+------+------+------+------+---------+---------+---------+------+
-|    1 | fly  |   24 |   80 |      68 |     100 | liu     |   50 |
-|    2 | test |   30 |   60 |      50 |      80 | wu      |   60 |
-|    3 | sky  |   27 |   80 |      68 |      80 | liu     |   50 |
-|    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
-+------+------+------+------+---------+---------+---------+------+
-# 内连接(table1 join table2 on 条件)
-mysql> select student.name,student.age,teacher.name from student 
-     > join teacher 
-     > on student.teacher=teacher.name;
-+------+------+------+
-| name | age  | name |
-+------+------+------+
-| fly  |   24 | liu  |
-| test |   30 | wu   |
-| sky  |   27 | liu  |
-| snow |   40 | wu   |
-+------+------+------+
-mysql> select student.*,teacher.age from student 
-     > join teacher 
-     > on student.teacher=teacher.name;
-+------+------+------+------+---------+---------+---------+------+
-| id   | name | age  | math | english | history | teacher | age  |
-+------+------+------+------+---------+---------+---------+------+
-|    1 | fly  |   24 |   80 |      68 |     100 | liu     |   50 |
-|    2 | test |   30 |   60 |      50 |      80 | wu      |   60 |
-|    3 | sky  |   27 |   80 |      68 |      80 | liu     |   50 |
-|    4 | snow |   40 |   70 |      80 |      90 | wu      |   60 |
-+------+------+------+------+---------+---------+---------+------+
-# 左外链接(包含join左边表中的记录，甚至右边表中没有和他匹配的记录)
-mysql> select student.id,student.name,teacher.* from student 
-     > left join teacher 
-     > on student.id=teacher.id;
-+------+------+------+------+------+
-| id   | name | id   | name | age  |
-+------+------+------+------+------+
-|    1 | fly  |    1 | liu  |   50 |
-|    2 | test |    2 | wu   |   60 |
-|    3 | sky  | NULL | NULL | NULL |
-|    4 | snow | NULL | NULL | NULL |
-+------+------+------+------+------+
-# 右外链接(包含join右边表中的记录，甚至左边表中没有和他匹配的记录)
-mysql> select teacher.*,student.name from teacher 
-     > right join student 
-     > on teacher.id=student.id;
-+------+------+------+------+
-| id   | name | age  | name |
-+------+------+------+------+
-|    1 | liu  |   50 | fly  |
-|    2 | wu   |   60 | test |
-| NULL | NULL | NULL | sky  |
-| NULL | NULL | NULL | snow |
-+------+------+------+------+
-# full全连接，将左右两个表的数据全部返回,mysql不支持full join.
 ```
