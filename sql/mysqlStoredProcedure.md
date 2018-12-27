@@ -57,3 +57,34 @@ mysql> select @teacher;
 # 显示检查存储过程
 mysql> show create procedure student;
 ```
+
+## 使用游标
+
+游标实际上是一种能从包括多条数据记录的结果集中每次提取一条记录的机制。
+
+游标充当指针的作用。
+
+尽管游标能便利结果中的所有行，但他一次只指向一行。
+
+```
+mysql> DELIMITER //
+# 游标依赖于过程，过程结束，游标消失
+mysql> create procedure student()
+    -> begin
+    -> declare stname varchar(20);
+    -> declare test cursor for
+    -> select name from student;
+    -> open test;
+    -> fetch next from test into stname;
+    -> select stname;
+    -> close test;
+    -> END//
+mysql> DELIMITER ;
+mysql> CALL student();
++--------+
+| stname |
++--------+
+| fly    |
++--------+
+# 要把游标结果存储到变量，再select变量，不然不会显示结果
+```
