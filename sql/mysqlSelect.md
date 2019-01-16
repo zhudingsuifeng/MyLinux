@@ -6,15 +6,15 @@ sql查询语句中用到的关键词主要包含7个，书写顺序大致为(关
 
 ```
 +--------+-----------------------------+
-|  子句  | introduction                |
+|  子句   | introduction                |
 +--------+-----------------------------+
-| SELECT | 要返回的列或表达式          |
-| FROM   | 从中检索数据的表            |
-| WHERE  | 行级过滤                    |
-|GROUP BY| 分组说明                    |
-| HAVING | 组级过滤                    |
-|ORDER BY| 输出排序顺序                |
-|LIMIT   | 要检索的行数                |
+| SELECT | 要返回的列或表达式             |
+| FROM   | 从中检索数据的表               |
+| WHERE  | 行级过滤                     |
+|GROUP BY| 分组说明                     |
+| HAVING | 组级过滤                     |
+|ORDER BY| 输出排序顺序                  |
+|LIMIT   | 要检索的行数                  |
 +--------+-----------------------------+
 ```
 
@@ -563,4 +563,21 @@ mysql> select * from student
 |    1 | fly  |   24 |   80 |      68 |     100 | liu     |
 |    3 | sky  |   27 |   80 |      68 |      80 | liu     |
 +------+------+------+------+---------+---------+---------+
+```
+
+### group by使用要点:
+
+1. group by 和order by 一起使用时，order by 要在group by 的后面。
+
+2. order by 的字段在group by 后面必须有。
+
+3. 在select 选择列表中的字段，必须出现在group by 子句中。
+
+4. 在select 中的聚集表达式字段可以不出现在group by 子句中。
+
+```
+select DEPTCD,count(*) as SALE
+from POS_TRANSMST
+where SALETP='SALE' and BIZDT=to_date('2017-12-31','yyyy-mm-dd hh24-mi-ss')
+group by DEPTCD;
 ```
